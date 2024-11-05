@@ -1,5 +1,8 @@
 import { _decorator, Component, Node, Prefab, NodePool } from 'cc';
 import InstanceBase from '../base/InstanceBase';
+import { PoolBase } from '../Pool/PoolBase';
+import { PoolKey } from '../Pool/PoolConfig';
+import { PoolMgr } from '../Pool/PoolMgr';
 import { RedCallInfo } from '../type';
 import { RedPool } from './RedPool';
 import { TreeNode } from './TreeNode';
@@ -22,7 +25,7 @@ export class RedDotMgr extends InstanceBase {
     /**红点树根节点 */
     public root: TreeNode;
     /**红点对象池 */
-    public redPool: RedPool;
+    public redPool: PoolBase;
 
     constructor() {
         super();
@@ -33,26 +36,12 @@ export class RedDotMgr extends InstanceBase {
         this.m_TempDirtyNodes = new Array<TreeNode>();
     }
 
-    /**
-     * 通过路径初始化节点
-     */
-    public async init(prefab: string, comp?: string): Promise<void>;
-    /**
-     * 通过预制体初始化对象池
-     * @param prefab 预制体
-    */
-    public init(prefab: Prefab, comp?: string): void;
-
-    public async init(redPrefab: string | Prefab, comp?: string) {
-        this.redPool = new RedPool(comp || "RedDotItem");
-        if (typeof redPrefab === "string") {
-            await this.redPool.init(redPrefab)
-        } else if (redPrefab instanceof Prefab) {
-            this.redPool.init(redPrefab);
-        }
+    init(){
+        this.redPool = PoolMgr.instance().getPool(PoolKey.RED);
         G.main.schedule(this.update.bind(this));
     }
 
+  
     /**
      * 添加红点到某个节点上面
      * @param node 父节点

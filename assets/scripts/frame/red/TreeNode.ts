@@ -246,7 +246,7 @@ export class TreeNode {
     private updateRed(newValue: number) {
         let redItem = this.redItem;
         if (!redItem) {
-            const redNode = RedDotMgr.instance().redPool.getItem();
+            const redNode = RedDotMgr.instance().redPool.get();
             redNode.parent = this.redParent;
             redItem = redNode.getComponent(RedDotItem);
             this.redItem = redItem;
