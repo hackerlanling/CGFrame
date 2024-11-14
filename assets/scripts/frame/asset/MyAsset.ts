@@ -13,7 +13,7 @@ export default class MyAsset {
     private readonly clearTime = 50;
 
     constructor() {
-        XF.main.schedule(() => {
+        G.main.schedule(() => {
             this._autoRef();
         }, this.clearTime);
     }

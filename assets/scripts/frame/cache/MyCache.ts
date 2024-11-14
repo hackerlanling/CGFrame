@@ -36,7 +36,7 @@ export default class MyCache {
         if (data !== null && data != "") {
             //判断是否过期了
             var dataJson = JSON.parse(data);
-            if (dataJson.timeto == 0 || (dataJson.timeto > 0 && dataJson.timeto >= XF.time)) {
+            if (dataJson.timeto == 0 || (dataJson.timeto > 0 && dataJson.timeto >= G.time)) {
                 val = dataJson.value;
             }
         }
@@ -58,10 +58,10 @@ export default class MyCache {
             _timeto = timeout;
         } else if (timeout == "today") {
             //缓存今日内有效
-            _timeto = DateUtils.getEndOfDayTimestamp(XF.time);
+            _timeto = DateUtils.getEndOfDayTimestamp(G.time);
         } else if (!isNaN(timeout)) {
             //缓存指定秒数
-            _timeto = XF.time + timeout * 1;
+            _timeto = G.time + timeout * 1;
         }
         var _val = {
             value: val,

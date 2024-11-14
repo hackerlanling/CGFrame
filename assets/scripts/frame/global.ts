@@ -4,9 +4,8 @@ import MyCache from "./cache/MyCache";
 import { EventEmitter } from "./event/EventEmitter";
 import { RedDotMgr } from "./red/RedDotMgr";
 import { DateUtils } from "./utils/DateUtils";
-import { LogUtils } from "./utils/LogUtils";
 
-class _XF {
+class _G {
     /**
      * 全局资源管理器
      */
@@ -27,23 +26,29 @@ class _XF {
         return DateUtils.getNowTimestamp();
     }
 
-    public static async init(main: Component) {
-        LogUtils.xf("init");
+    public static init(main: Component) {
         this.main = main;
         this.asset = new MyAsset();
         this.cache = new MyCache();
-        await RedDotMgr.instance().init("ui/RedItem");
     }
 
+    /**
+     * 初始化异步相关的，一般是和业务层绑定初始化的
+     */
+    public static async initAsync() {
+        await RedDotMgr.instance().init("ui/RedItem");
+        
+
+    }
 
 }
 
-export default class XF extends _XF {
+export default class G extends _G {
 
 }
 
 declare global {
-    var XF: typeof _XF;
+    var G: typeof _G;
 }
 
-window["XF"] = XF;
+window["G"] = G;

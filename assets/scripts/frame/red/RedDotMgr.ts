@@ -50,7 +50,7 @@ export class RedDotMgr extends InstanceBase {
         } else if (redPrefab instanceof Prefab) {
             this.redPool.init(redPrefab);
         }
-        XF.main.schedule(this.update.bind(this));
+        G.main.schedule(this.update.bind(this));
     }
 
     /**

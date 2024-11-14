@@ -1,7 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { RedCallInfo } from '../type';
 import { RedDotItem } from './RedDotItem';
-import { RedDotMgr } from './ReddotMgr';
+import { RedDotMgr } from './RedDotMgr';
 const { ccclass, property } = _decorator;
 
 /**

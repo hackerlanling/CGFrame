@@ -35,26 +35,26 @@ export default class MyAudio extends InstanceBase {
         this._effectAudioSource = audioMgr.addComponent(AudioSource);
 
         //音量开关读取
-        var _val = XF.cache.get(this._storeMusicKey, "system");
+        var _val = G.cache.get(this._storeMusicKey, "system");
         this._isMusicOn = _val != undefined ? _val : this._isMusicOn;
 
-        var _val = XF.cache.get(this._storeEffectKey, "system");
+        var _val = G.cache.get(this._storeEffectKey, "system");
         this._isEffectOn = _val != undefined ? _val : this._isEffectOn;
 
         //音量读取
-        var _val = XF.cache.get(this._storeMusicVolumeKey, "system");
+        var _val = G.cache.get(this._storeMusicVolumeKey, "system");
         this._musicVolume = _val != undefined ? _val : this._musicVolume;
 
-        var _val = XF.cache.get(this._storeEffectVolumeKey, "system");
+        var _val = G.cache.get(this._storeEffectVolumeKey, "system");
         this._effectVolume = _val != undefined ? _val : this._effectVolume;
     }
 
     public save() {
         try {
-            XF.cache.set(this._storeMusicKey, this.isMusicOn, 0, "system");
-            XF.cache.set(this._storeMusicVolumeKey, this.musicVolume, 0, "system");
-            XF.cache.set(this._storeEffectKey, this.isEffectOn, 0, "system");
-            XF.cache.set(this._storeEffectVolumeKey, this.effectVolume, 0, "system");
+            G.cache.set(this._storeMusicKey, this.isMusicOn, 0, "system");
+            G.cache.set(this._storeMusicVolumeKey, this.musicVolume, 0, "system");
+            G.cache.set(this._storeEffectKey, this.isEffectOn, 0, "system");
+            G.cache.set(this._storeEffectVolumeKey, this.effectVolume, 0, "system");
         } catch (error) { }
     }
 
@@ -153,7 +153,7 @@ export default class MyAudio extends InstanceBase {
      * @param loop 是否循环
      */
     public async playMusic(url: string, loop: boolean = true) {
-        var audio = await XF.asset.getAudio(url);
+        var audio = await G.asset.getAudio(url);
         this.curMusicUrl = url;
         this.curLoop = loop;
 
@@ -173,7 +173,7 @@ export default class MyAudio extends InstanceBase {
      * @param url 音效地址
      */
     public async playEffect(url: string) {
-        var audio = await XF.asset.getAudio(url);
+        var audio = await G.asset.getAudio(url);
         this._effectAudioSource.playOneShot(audio, this.effectVolume);
     }
 }

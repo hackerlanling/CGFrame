@@ -1,6 +1,8 @@
+/**
+ * 单例基础类
+ */
 export default class InstanceBase {
-    private static _instance: any;
-
+    protected static _instance: any;
 
     public static instance<T extends {}>(this: new () => T): T {
         if (!(<any>this)._instance) {

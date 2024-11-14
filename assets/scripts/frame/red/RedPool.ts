@@ -13,7 +13,7 @@ export class RedPool extends NodePool {
 
     public async init(prefab: Prefab | string) {
         if (typeof prefab === "string") {
-            this.redPrefab = await XF.asset.getPrefab("ui", prefab);
+            this.redPrefab = await G.asset.getPrefab("ui", prefab);
         } else {
             this.redPrefab = prefab;
         }
