@@ -1,16 +1,18 @@
-import { Asset, AudioClip, Component, error, Node, Prefab, sp, SpriteFrame, Texture2D, _decorator } from "cc";
+import { Node, _decorator } from "cc";
 
-import { isValid } from "cc";
+import { EComponent } from "../extends/EComponent";
 import { UIClass } from "./UIClass";
 import UIManager from "./UIManager";
-
-
 
 const { ccclass, property } = _decorator;
 
 //UILogic基类
 @ccclass
-export default class UILogic extends Component {
+export default class UILogic extends EComponent {
+
+    protected get uiId(): string {
+        return this.uiClass.uiConfig.ID;
+    }
 
     //持有uiClass实例类
     public uiClass: UIClass;
@@ -35,33 +37,6 @@ export default class UILogic extends Component {
     closePage() {
         //关闭分页页面，可直接在逻辑层重写
     }
-
-    //通过本窗体加载资源，会在窗体被关闭时，销毁对应的资源
-    async getAsset(bundleName: string, path: string, type?: typeof Asset) {
-        return new Promise((resolve, reject) => {
-            G.asset.getAsset(bundleName, path, this.uiClass.uiConfig.ID, type).then((v) => {
-                if (isValid(this.node, true)) {
-                    resolve(v);
-                }
-            });
-        });
-    }
-    public async getAudio(path: string, bundleName: string = "audio"): Promise<AudioClip> {
-        return this.getAsset(bundleName, path, AudioClip) as any;
-    }
-    public async getPrefab(bundleName: string = "ui", path: string): Promise<Prefab> {
-        return this.getAsset(bundleName, path, Prefab) as any;
-    }
-    public async getSpriteFrame(bundleName: string = "ui", path: string): Promise<SpriteFrame> {
-        return this.getAsset(bundleName, path, SpriteFrame) as any;
-    }
-    public async getTexture(bundleName: string = "ui", path: string): Promise<Texture2D> {
-        return this.getAsset(bundleName, path, Texture2D) as any;
-    }
-    public async getSkeletonData(bundleName: string = "ui", path: string): Promise<sp.SkeletonData> {
-        return this.getAsset(bundleName, path, sp.SkeletonData) as any;
-    }
-
 
     remove(): void {
         this.uiClass?.remove();
