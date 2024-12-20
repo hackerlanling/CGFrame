@@ -4,7 +4,6 @@ import { PoolBase } from '../Pool/PoolBase';
 import { PoolKey } from '../Pool/PoolConfig';
 import { PoolMgr } from '../Pool/PoolMgr';
 import { RedCallInfo } from '../type';
-import { RedPool } from './RedPool';
 import { TreeNode } from './TreeNode';
 const { ccclass, property } = _decorator;
 

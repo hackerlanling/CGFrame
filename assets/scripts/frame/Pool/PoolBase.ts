@@ -2,6 +2,7 @@ import { instantiate, NodePool, Prefab, Node, Component, Label } from "cc";
 import { PoolState } from "./PoolConfig";
 
 
+
 /**
  * 扩展NodePool
  */

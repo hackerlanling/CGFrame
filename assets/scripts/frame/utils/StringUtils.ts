@@ -1,59 +1,77 @@
 
-
+/**
+ * 字符串工具类
+ */
 export class StringUtils {
 
     /**
-     * 判断字符串是否为空
-     * @param str 
-     * @returns 
+     * 替换字符串{}中的内容
+     * @param str 需要修改的字符串
+     * @returns 修改后的字符串
      */
-    static isEmpty(str: string | null | undefined): boolean {
-        return !str || str.trim().length === 0;
+    static STR(str: string, args?: num_str[]): string;
+    static STR(str: string, ...args: num_str[]): string;
+    static STR(str: string): string {
+        if (arguments.length < 2) return str;
+        if (arguments.length == 2 && Object.prototype.toString.call(arguments[1]) == "[object Array]") {
+            let args = arguments[1];
+            for (let i = 0; i < args.length; i++) {
+                str = str.replace(new RegExp("\\{" + (i + 1) + "\\}", "g"), args[i]);
+            }
+        } else {
+            for (let i = 1; i < arguments.length; i++) {
+                str = str.replace(new RegExp("\\{" + i + "\\}", "g"), arguments[i]);
+            }
+        }
+        return str;
     }
 
     /**
-     * 将数字转换成中文大写形式
-     * @param num - 要转换的数字
-     * @returns 转换后的中文字符串
+     * 返回str的长度 chr(255)以上计为2个长度
+     * @param str 
+     * @returns 
      */
-    static numberToChinese(num: number): string {
-        // 中文数字的单位
-        const units = ["", "十", "百", "千", "万", "十万", "百万", "千万", "亿"];
-        // 中文数字的字符
-        const digits = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
-
-        // 特殊情况：数字为0
-        if (num === 0) return digits[0];
-
-        let result = ""; // 存储最终结果的字符串
-        let unitIndex = 0; // 单位索引，表示当前位数
-        let zeroFlag = false; // 标记是否已经添加过“零”
-
-        // 逐位处理数字
-        while (num > 0) {
-            const digit = num % 10; // 取得当前数字的最后一位
-            if (digit !== 0) {
-                // 如果当前位不是0，则添加对应的中文数字和单位
-                result = digits[digit] + units[unitIndex] + result;
-                zeroFlag = false; // 重置“零”标记
-            } else if (!zeroFlag) {
-                // 如果当前位是0且之前没有添加过“零”，则添加“零”
-                result = digits[0] + result; // 添加“零”
-                zeroFlag = true; // 设置“零”标记
-            }
-            // 去掉最后一位数字，继续处理
-            num = Math.floor(num / 10);
-            unitIndex++; // 增加单位索引
+    static strLength(str: string): number {
+        var a = 0;
+        if (str == null) return a;
+        for (var i = 0; i < str.length; i++) {
+            if (str.charCodeAt(i) > 255) a += 2; //按照预期计数增加2
+            else a++;
         }
-
-        // 处理“十”的特例
-        if (result.startsWith(digits[1]) && unitIndex > 1) {
-            result = result.replace(digits[1], ""); // 去掉开头的“一十”
-        }
-
-        return result; // 返回转换后的中文字符串
+        return a;
     }
 
-    
+
+    /**
+     * 数字格式化
+     * @param n 
+     * @returns 
+     */
+    static formatValue(n: number): string {
+        let str = "";
+        if (n < 100000) {// 十万
+            str = n.toString();
+        } else if (n < 10000000) {// 一千万
+            str = parseFloat((Math.floor(n / 10) / 100).toString()) + "K";
+        } else if (n < 1000000000) {// 十亿
+            str = parseFloat((Math.floor(n / 10000) / 100).toString()) + "M";
+        } else {
+            str = parseFloat((Math.floor(n / 10000000) / 100).toString()) + "B";
+        }
+        return str;
+    }
+
+    /**
+     * 检测是否包含特殊字符
+     * @param str 
+     * @returns 
+     */
+    static hasSpecialchar(str: any): boolean {
+        var patrn = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、 ]/im;
+        if (!patrn.test(str)) {
+            return false;
+        }
+        return true;
+    }
 
 }

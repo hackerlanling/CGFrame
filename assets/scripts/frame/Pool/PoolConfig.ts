@@ -20,6 +20,8 @@ export enum PoolState {
 export enum PoolKey {
     /** 红点对象池 */
     RED = "Red",
+    /** ui遮罩 */
+    UI_MASK = "ui_mask",
 }
 
 /** 对象池配置类型*/
@@ -37,9 +39,15 @@ export type PoolConfigType = {
 /** 对象池配置 */
 export const PoolConfig: { [key in PoolKey]: PoolConfigType } = {
     [PoolKey.RED]: {
-        path: "red/RedDotItem",        // 预制体路径
+        path: "common/red/RedDotItem",        // 预制体路径
         comp: "RedDotItem",           // 控件名
         count: 5,                   // 初始数量
+        type: PoolLoadType.COMMON,  // 加载类型
+    },
+
+    [PoolKey.UI_MASK]: {
+        path: "common/prefab/mask_bg",        // 预制体路径
+        count: 1,                   // 初始数量
         type: PoolLoadType.COMMON,  // 加载类型
     },
 };
